@@ -1,0 +1,24 @@
+#!/bin/bash
+
+#SBATCH --time=1:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=1
+#SBATCH --partition=standard
+#SBATCH --mem=1G
+#SBATCH -J Batch_BdNMC
+#SBATCH --output=logs/%x_%j.out
+#SBATCH --error=logs/%x_%j.err
+#SBATCH --mail-user=zxk4gs@virginia.edu
+#SBATCH --mail-type=BEGIN,END,FAIL
+#SBATCH --constraint=rivanna
+#SBATCH --account=ldmxuva
+
+module purge
+
+# If UVA requires a Python module:
+# module load python
+
+cd $SLURM_SUBMIT_DIR
+
+python3 Craig/BdNMC/batch_scan.py
