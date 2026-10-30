@@ -3,7 +3,7 @@
 #Lines preceded by a # are ignored by the parser.
 
 #Uncomment this to set the seed for the Random Number Generator
-#seed 114234
+seed 114234
 
 #Give your run a name. If no name is supplied, one will be generated from the current time.
 #run 14506
