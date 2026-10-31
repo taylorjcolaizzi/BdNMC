@@ -13,6 +13,7 @@
 #SBATCH --mail-type=BEGIN,END,FAIL
 #SBATCH --constraint=rivanna
 #SBATCH --account=ldmxuva
+#SBATCH --array=0-19
 
 module purge
 
@@ -20,5 +21,15 @@ module purge
 # module load python
 
 cd $SLURM_SUBMIT_DIR
+pwd
+ls
 
-python3 Craig/BdNMC/batch_scan.py
+cd /sfs/gpfs/tardis/home/zxk4gs/Craig_Research/BdNMC
+pwd
+ls
+
+python3 batch_scan.py
+
+CARD=$(printf "Cards/parameter_%03d.dat" ${SLURM_ARRAY_TASK_ID})
+
+./bin/BDNMC $CARD
