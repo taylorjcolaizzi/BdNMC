@@ -1,17 +1,27 @@
 #!/usr/bin/env python3
 
+# Generates a bunch of parameter cards that you can then send to Slurm. That
+# way, the program runs parallel on a bunch of CPUs. You don't need to wait
+# for them to go in order on one CPU.
+
 from Parameter_Card_Generator import run_output_file
 import os
 
 # Parameter space
-mdp_values = [0.05, 0.10, 0.15, 0.20]      # GeV
-eps_values = [1e-5, 3e-5, 1e-4, 3e-4, 1e-3]
+# do linspace, no numpy
+mdp_values = [i / 20 for i in range(1, 5)]      # GeV
+# mpd_values = [0.05, 0.10, 0.15, 0.20]
+# do logspace, no numpy
+start, stop, num, base = -5, -3, 5, 10
+eps_values = [base ** (start + i * (stop - start) / (num - 1)) for i in range(num)]
+# eps_values = [1e-5, 3e-5, 1e-4, 3e-4, 1e-3]
 
 alpha_D = 0.5
 
 # Template parameter card
 template_card = "parameter.dat"
 
+i = 0
 for mdp in mdp_values:
 
     # Example model relation
@@ -19,10 +29,11 @@ for mdp in mdp_values:
 
     for eps in eps_values:
 
-        tag = f"mAp_{mdp:.3f}_eps_{eps:.1e}"
+        # tag = f"mAp_{mdp:.3f}_eps_{eps:.1e}"
+        tag = i
 
-        output_event_file = f"Events/batch/events_{tag}.dat"
-        output_param_card = f"Cards/parameter_{tag}.dat"
+        output_event_file = f"Events/batch/events_{tag:03d}.dat"
+        output_param_card = f"Cards/parameter_{tag:03d}.dat"
 
         params = {
             "epsilon": eps,
@@ -38,7 +49,9 @@ for mdp in mdp_values:
             template_card,
             output_param_card,
             params,
-            run=True
+            run=False
+            #run=True
         )
+        i += 1
 
 print("Scan complete.")
