@@ -13,7 +13,7 @@
 #SBATCH --mail-type=BEGIN,END,FAIL
 #SBATCH --constraint=rivanna
 #SBATCH --account=ldmxuva
-#SBATCH --array=0-19
+#SBATCH --array=0-99
 
 module purge
 

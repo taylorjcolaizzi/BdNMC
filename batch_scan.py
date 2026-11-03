@@ -9,7 +9,7 @@ import os
 
 # Parameter space
 # do linspace, no numpy
-mdp_values = [i / 20 for i in range(1, 5)]      # GeV
+mdp_values = [i / 100 for i in range(1, 101)]      # GeV
 # mpd_values = [0.05, 0.10, 0.15, 0.20]
 # do logspace, no numpy
 start, stop, num, base = -5, -3, 5, 10
@@ -21,37 +21,31 @@ alpha_D = 0.5
 # Template parameter card
 template_card = "parameter.dat"
 
-i = 0
+i = 0 # start counter
 for mdp in mdp_values:
 
     # Example model relation
     mdm = mdp / 3.0
 
-    for eps in eps_values:
+    tag = i
 
-        # tag = f"mAp_{mdp:.3f}_eps_{eps:.1e}"
-        tag = i
+    output_event_file = f"Events/batch/events_{tag:03d}.dat"
+    output_param_card = f"Cards/parameter_{tag:03d}.dat"
 
-        output_event_file = f"Events/batch/events_{tag:03d}.dat"
-        output_param_card = f"Cards/parameter_{tag:03d}.dat"
+    params = {
+        "dark_photon_mass": mdp,
+        "dark_matter_mass": mdm,
+        "output_file": output_event_file
+    }
 
-        params = {
-            "epsilon": eps,
-            "alpha_D": alpha_D,
-            "dark_photon_mass": mdp,
-            "dark_matter_mass": mdm,
-            "output_file": output_event_file
-        }
+    print(f"Running {tag}")
 
-        print(f"Running {tag}")
-
-        run_output_file(
-            template_card,
-            output_param_card,
-            params,
-            run=False
-            #run=True
-        )
-        i += 1
+    run_output_file(
+        template_card,
+        output_param_card,
+        params,
+        run=False
+    )
+    i += 1
 
 print("Scan complete.")
