@@ -9,7 +9,7 @@ import os
 
 # Parameter space
 # do linspace, no numpy
-mdp_values = [i / 100 for i in range(1, 101)]      # GeV
+mdp_values = [i / 1000 for i in range(1, 101)]      # GeV
 # mpd_values = [0.05, 0.10, 0.15, 0.20]
 # do logspace, no numpy
 start, stop, num, base = -5, -3, 5, 10
