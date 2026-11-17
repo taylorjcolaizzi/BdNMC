@@ -4,15 +4,15 @@
 model Dark_Photon
 
 #Model Parameters
-epsilon 1e-03
+epsilon 1e-06
 dark_matter_mass 0.01
-dark_photon_mass 0.03
+dark_photon_mass 0.005
 alpha_D 0.5
 
 #Run parameters
-POT 1e21
+POT 4e21
 pi0_per_POT 0.9
-samplesize 10000
+samplesize 1000
 max_trials 1000000
 
 burn_max 1000
@@ -33,16 +33,13 @@ p_num_target 6
 production_channel pi0_decay
 
 #Choosing a production distribution is optional, but it must be grouped with the relevant production_channel entry 
-production_distribution pi0_sanfordwang
-#bmpt
+production_distribution bmpt
 
 #Second channel
 production_channel eta_decay
 production_distribution bmpt
 
 #Third channel
-production_channel V_decay
-production_distribution proton_brem
 
 
 ############################
@@ -56,6 +53,7 @@ production_distribution proton_brem
 #Scattering Parameters
 #Choose from NCE_nucleon, NCE_electron, Pion_Inelastic, Inelastic_Delta_to_Gamma or NCE_nucleon_baryonic.
 signal_channel Signal_Decay
+weighted true
 #scatter_dist_filename Source/data/DIS.dat
 
 #Cuts on the kinetic energy of outgoing nucleon or electron. These default to min=0 and max=1e9 GeV
@@ -74,15 +72,15 @@ max_scatter_angle 6.29
 
 #Detector Parameters
 detector cuboid
-x-position 13.8
-y-position -4.19
-z-position 989.89
+x-position 11.5180
+y-position -3.0436
+z-position 1001.8023
 width 4.1
 length 14.3
 height 4.1
-det-theta 0
+det-theta 0.0145766
 det-phi 0
-det-psi 0
+det-psi -0.057715289
 
 #Material parameters
 #Mass is set in GeV.
@@ -100,8 +98,8 @@ mass 14.011
 #OUPTUT#
 ########
 
-output_file ./Events/events-0.01_1e-3.dat
-summary_file ./Events/summary.dat
+output_file ./Events/batch/events.dat
+summary_file ./Events/batch/summary.dat
 
 
 #In comprehensive mode, all particles that make up an event are written to the output file. This overwrites the output file.
