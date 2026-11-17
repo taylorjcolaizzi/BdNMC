@@ -25,7 +25,7 @@ def allowed_production_channels(m_dm):
 def main():
     for m_DM in m_DM_values:
 
-        # Use the requested mediator-to-DM mass ratio for the scattering scan.
+        # Match the electron-scattering scan used to make the plotted data.
         m_DP = 3.0 * m_DM
         production_channels = allowed_production_channels(m_DM)
         tag = f"dm_scatter_mdp3x_mdm_{m_DM:.3f}"
