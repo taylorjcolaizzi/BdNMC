@@ -5,38 +5,41 @@ from Parameter_Card_Generator import run_output_file
 # Parameter space
 m_DM_values = [i / 1000 for i in range(10, 101, 10)]  # 0.01 to 0.10 GeV
 
-# Parent meson masses in GeV
-M_PI0 = 0.1349766
-M_ETA = 0.547862
-
 # Template parameter card
 template_card = "parameter_mass.dat"
 
 
 def allowed_production_channels(m_dm):
-    channels = []
-    if 2.0 * m_dm <= M_PI0:
-        channels.append(("pi0_decay", "pi0_sanfordwang"))
-    if 2.0 * m_dm <= M_ETA:
-        channels.append(("eta_decay", "bmpt", {"meson_per_pi0": 0.0333}))
+    # Match the final channel schedule described in Jack's eta-decay slides.
+    if m_dm <= 0.04:
+        channels = [("pi0_decay", "bmpt"), ("eta_decay", "bmpt")]
+    else:
+        channels = [("eta_decay", "bmpt")]
+
+    channels.append(
+        ("V_decay", "proton_brem", {"ptmax": 1, "zmin": 0.1, "zmax": 0.9})
+    )
     return channels
 
 
 def main():
     for m_DM in m_DM_values:
-        # The mediator is off-shell for DM-pair production at this mass ratio.
-        m_DP = m_DM / 3.0
+
+        # Use the requested mediator-to-DM mass ratio for the scattering scan.
+        m_DP = 3.0 * m_DM
         production_channels = allowed_production_channels(m_DM)
-        tag = f"electron_scatter_mdm_{m_DM:.3f}"
+        tag = f"dm_scatter_mdp3x_mdm_{m_DM:.3f}"
 
         output_event_file = f"Events/batch/events_{tag}.dat"
+        output_summary_file = f"Events/batch/summary_{tag}.dat"
         output_param_card = f"Cards/parameter_{tag}.dat"
 
         params = {
             "dark_photon_mass": m_DP,
             "dark_matter_mass": m_DM,
             "signal_channel": "NCE_electron",
-            "output_file": output_event_file
+            "output_file": output_event_file,
+            "summary_file": output_summary_file,
         }
 
         print(f"Running {tag}")
@@ -49,7 +52,7 @@ def main():
             production_channels=production_channels
         )
 
-    print("Electron-scattering scan complete.")
+    print("Scan complete.")
 
 
 if __name__ == "__main__":

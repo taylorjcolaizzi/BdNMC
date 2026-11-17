@@ -1,0 +1,5 @@
+Run 1794927364
+pi0_decay 0.09 0.03 1e-06 0.5 3.24517e-06 NCE_electron 4e+21 1 1000 1.18879e+09 3.89429e+09
+eta_decay 0.09 0.03 1e-06 0.5 4.35983e-06 NCE_electron 4e+21 1 1000 2.6975e+09 3.89429e+09
+Dark_Bremsstrahlung 0.09 0.03 1e-06 0.5 5.99803e-08 NCE_electron 4e+21 1 1000 8.01078e+06 3.89429e+09
+Total 0.09 0.03 1e-06 0.5 7.66498e-06 NCE_electron 4e+21 1 1000 
