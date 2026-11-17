@@ -9,13 +9,42 @@ def update_param(b,replacement_dictionary):
             b[i]=line[0]+' '+str(replacement_dictionary[line[0]])+'\n'
     return b
 
+def update_production_channels(lines, channels):
+    updated = []
+    inserted_channels = False
+
+    for line in lines:
+        fields = line.split()
+        if fields and fields[0] == "production_channel":
+            if not inserted_channels:
+                for channel_entry in channels:
+                    channel, distribution = channel_entry[:2]
+                    updated.append(f"production_channel {channel}\n")
+                    updated.append(f"production_distribution {distribution}\n")
+                    if len(channel_entry) > 2:
+                        for key, value in channel_entry[2].items():
+                            updated.append(f"{key} {value}\n")
+                inserted_channels = True
+            continue
+        if fields and fields[0] == "production_distribution":
+            continue
+        updated.append(line)
+
+    if not inserted_channels:
+        raise ValueError("No production_channel entries found in the parameter card.")
+    if not channels:
+        raise ValueError("At least one production channel must be enabled.")
+    return updated
+
 #file is the parameter card you're reading in, outfile is the name for the new parameter card you're generating
 #replacement dictionary is the list of parameters you want to change.
 #This will also run the paramter file if run=True!
-def run_output_file(file,outfile,replacement_dictionary,run=True):
+def run_output_file(file,outfile,replacement_dictionary,run=True,production_channels=None):
     with open(file) as f:
         b=f.readlines()
     b=update_param(b,replacement_dictionary)
+    if production_channels is not None:
+        b=update_production_channels(b,production_channels)
     with open(outfile,'w') as f:
             f.writelines(b)
     if run:
@@ -36,4 +65,3 @@ def test():
 
 if __name__ == "__main__":
 	test()
-

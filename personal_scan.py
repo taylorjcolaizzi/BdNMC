@@ -1,34 +1,46 @@
 #!/usr/bin/env python3
 
 from Parameter_Card_Generator import run_output_file
-import os
 
 # Parameter space
-mdp_values = [0.05, 0.10, 0.15, 0.20]      # GeV
-eps_values = [1e-5, 3e-5, 1e-4, 3e-4, 1e-3]
+m_DM_values = [i / 1000 for i in range(10, 101, 10)]  # 0.01 to 0.10 GeV
 
-alpha_D = 0.5
+# Parent meson masses in GeV
+M_PI0 = 0.1349766
+M_ETA = 0.547862
 
 # Template parameter card
-template_card = "parameter.dat"
+template_card = "parameter_mass.dat"
 
-for mdp in mdp_values:
+def allowed_production_channels(m_dm, m_dp):
+    if m_dp <= 2 * m_dm:
+        raise ValueError(
+            f"dark_photon_mass ({m_dp} GeV) must be greater than "
+            f"2 * dark_matter_mass ({2 * m_dm} GeV) for V -> DM DM."
+        )
 
-    # Example model relation
-    mdm = mdp / 3.0
+    channels = []
+    if m_dp <= M_PI0:
+        channels.append(("pi0_decay", "pi0_sanfordwang"))
+    if m_dp <= M_ETA:
+        channels.append(("eta_decay", "bmpt"))
+    channels.append(("V_decay", "proton_brem"))
+    return channels
 
-    for eps in eps_values:
+def main():
+    for m_DM in m_DM_values:
 
-        tag = f"mAp_{mdp:.3f}_eps_{eps:.1e}"
+        # Example model relation
+        m_DP = m_DM * 3.0
+        production_channels = allowed_production_channels(m_DM, m_DP)
+        tag = f"mdm_{m_DM:.3f}"
 
         output_event_file = f"Events/batch/events_{tag}.dat"
         output_param_card = f"Cards/parameter_{tag}.dat"
 
         params = {
-            "epsilon": eps,
-            "alpha_D": alpha_D,
-            "dark_photon_mass": mdp,
-            "dark_matter_mass": mdm,
+            "dark_photon_mass": m_DP,
+            "dark_matter_mass": m_DM,
             "output_file": output_event_file
         }
 
@@ -38,7 +50,12 @@ for mdp in mdp_values:
             template_card,
             output_param_card,
             params,
-            run=True
+            run=True,
+            production_channels=production_channels
         )
 
-print("Scan complete.")
+    print("Scan complete.")
+
+
+if __name__ == "__main__":
+    main()
