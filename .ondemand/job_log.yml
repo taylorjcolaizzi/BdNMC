@@ -1,0 +1,68 @@
+---
+- id: '23217488'
+  status: completed
+  allocated_nodes: []
+  submit_host: 
+  job_name: VisibleDM
+  job_owner: zxk4gs
+  accounting_id: ldmxuva
+  procs: 1
+  queue_name: standard-rivanna,standard-rivanna-largemem
+  wallclock_time: 0
+  wallclock_limit: 3600
+  cpu_time: 
+  submission_time: 2026-11-20 10:32:12.000000000 -05:00
+  dispatch_time: 
+  native:
+    account: ldmxuva
+    job_id: '23217488'
+    exec_host: n/a
+    min_cpus: '1'
+    cpus: '1'
+    min_tmp_disk: '0'
+    nodes: '1'
+    end_time: N/A
+    dependency: "(null)"
+    features: rivanna
+    array_job_id: '23217488'
+    group_name: users
+    group_id: '100'
+    over_subscribe: OK
+    sockets_per_node: "*"
+    array_job_task_id: 23217488_[0-332%16]
+    cores_per_socket: "*"
+    job_name: VisibleDM
+    threads_per_core: "*"
+    comment: "(null)"
+    array_task_id: 0-332%16
+    time_limit: '1:00:00'
+    time_left: '1:00:00'
+    min_memory: 1024M
+    time_used: '0:00'
+    req_node: ''
+    node_list: ''
+    command: "(null)"
+    contiguous: '0'
+    qos: normal
+    partition: standard-rivanna,standard-rivanna-largemem
+    priority: '5682617'
+    reason: None
+    start_time: N/A
+    state_compact: PD
+    state: PENDING
+    user: zxk4gs
+    user_id: '15556902'
+    reservation: "(null)"
+    submit_time: '2026-11-20T10:32:12'
+    wckey: "(null)"
+    licenses: "(null)"
+    excluded_nodes: ''
+    core_specialization: N/A
+    nice: '0'
+    scheduled_nodes: "(null)"
+    sockets_cores_threads: "*:*:*"
+    work_dir: "/home/zxk4gs/Craig_Research/Taylor_BdNMC"
+    gres: N/A
+  gpus: 0
+  tasks: []
+  cluster: shen

@@ -1,0 +1,27 @@
+---
+title: VisibleDM
+created_at: 1795188722
+form:
+- auto_scripts
+- auto_batch_clusters
+attributes:
+  auto_scripts:
+    options:
+    - - hello_world.sh
+      - "/home/zxk4gs/Craig_Research/Taylor_BdNMC/hello_world.sh"
+    - - visible_signal_slurm.sh
+      - "/home/zxk4gs/Craig_Research/Taylor_BdNMC/visible_signal_slurm.sh"
+    value: "/home/zxk4gs/Craig_Research/Taylor_BdNMC/visible_signal_slurm.sh"
+    directory: "/home/zxk4gs/Craig_Research/Taylor_BdNMC"
+    label: Script
+    help: ''
+    required: false
+  auto_batch_clusters:
+    options:
+    - - shen
+      - shen
+      - data-max-auto-cores: 128
+    value: shen
+    label: Cluster
+    help: ''
+    required: false
