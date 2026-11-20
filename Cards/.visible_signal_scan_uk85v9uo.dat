@@ -1,0 +1,80 @@
+#Parameter specification for NOvA
+#Masses are provided in GeV, all lengths in meters.
+
+model Dark_Photon
+
+#Model Parameters
+epsilon 5.6234132519034905e-08
+dark_matter_mass 0.21
+dark_photon_mass 0.35
+alpha_D 0.5
+
+#Run parameters
+POT 4e21
+pi0_per_POT 0.9
+samplesize 1000
+max_trials 1000000
+
+burn_max 1000
+burn_timeout 20000
+
+beam_energy 120
+n_num_target 6
+p_num_target 6
+
+################################
+#Production Channel Definitions#
+################################
+
+#Production Parameters
+production_channel eta_decay
+production_distribution bmpt
+production_channel V_decay
+production_distribution proton_brem
+ptmax 1
+zmin 0.1
+zmax 0.9
+
+
+############################
+#END OF PRODUCTION CHANNELS#
+############################
+
+################
+#SIGNAL CHANNEL#
+################
+
+signal_channel Signal_Decay
+weighted true
+
+efficiency 1
+min_scatter_energy 0
+max_scatter_energy 120
+min_scatter_angle 0.0
+max_scatter_angle 6.29
+
+######################
+#DETECTOR DECLARATION#
+######################
+
+detector cuboid
+x-position 11.5180
+y-position -3.0436
+z-position 1001.8023
+width 4.1
+length 14.3
+height 4.1
+det-theta 0.0145766
+det-phi 0
+det-psi -0.057715289
+
+material Liquid_Scintillator
+number_density 5.16e22
+proton_number 8
+neutron_number 6
+electron_number 8
+mass 14.011
+
+output_file /sfs/gpfs/tardis/home/zxk4gs/Craig_Research/Taylor_BdNMC/Events/visible_signal_array/task_093/events.dat
+summary_file /sfs/gpfs/tardis/home/zxk4gs/Craig_Research/Taylor_BdNMC/Events/visible_signal_array/task_093/summary.dat
+output_mode summary
