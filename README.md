@@ -106,13 +106,13 @@ For the Rivanna array run, first build `build/main` once in a compute session,
 then submit from the repository root:
 
 ```bash
-mkdir -p logs
 sbatch visible_signal_slurm.sh
 ```
 
-The array runs one mass/ε² point per task and writes isolated results under
-`Events/visible_signal_array`. Adjust the array concurrency limit in the
-script to match your allocation.
+The array runs one mass/ε² point per task, writes isolated results under
+`Events/visible_signal_array`, and writes each task's scheduler output in the
+repository root. Adjust the account and array concurrency limit in the script
+to match your allocation.
 
 ---
 

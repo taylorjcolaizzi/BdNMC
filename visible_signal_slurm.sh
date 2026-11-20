@@ -7,9 +7,8 @@
 #SBATCH --partition=standard
 #SBATCH --mem=1G
 #SBATCH --job-name=VisibleDM
-#SBATCH --output=logs/%x_%A_%a.out
-#SBATCH --error=logs/%x_%A_%a.err
-#SBATCH --constraint=rivanna
+#SBATCH --output=%x_%A_%a.out
+#SBATCH --error=%x_%A_%a.err
 #SBATCH --account=ldmxuva
 #SBATCH --array=0-332%16
 
@@ -46,7 +45,11 @@ if [[ "${DRY_RUN:-0}" == "1" ]]; then
     exit 0
 fi
 
-module purge
+if [[ -z "${SLURM_SUBMIT_DIR:-}" ]]; then
+    echo "Submit this script with sbatch from the repository root." >&2
+    exit 1
+fi
+
 cd "$SLURM_SUBMIT_DIR"
 
 if [[ ! -x build/main ]]; then
@@ -54,7 +57,12 @@ if [[ ! -x build/main ]]; then
     exit 1
 fi
 
-export BDNMC_EXECUTABLE="$SLURM_SUBMIT_DIR/build/main"
+if ! command -v python3 >/dev/null 2>&1; then
+    echo "python3 is not available in the job environment." >&2
+    exit 1
+fi
+
+export BDNMC_EXECUTABLE="$PWD/build/main"
 python3 visible_signal_scan.py \
     --point "$MASS_MEV" "$EPSILON2" \
     --output-dir "$OUTPUT_DIR" \
