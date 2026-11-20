@@ -102,6 +102,18 @@ invisible dark-photon decay channel for this scan. Confirm that mass relation
 before interpreting a full scan as a reproduction of the presentation. The
 SHIP exclusion contours shown in the presentation are not included.
 
+For the Rivanna array run, first build `build/main` once in a compute session,
+then submit from the repository root:
+
+```bash
+mkdir -p logs
+sbatch visible_signal_slurm.sh
+```
+
+The array runs one mass/ε² point per task and writes isolated results under
+`Events/visible_signal_array`. Adjust the array concurrency limit in the
+script to match your allocation.
+
 ---
 
 ## Example Output

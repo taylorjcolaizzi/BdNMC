@@ -3,6 +3,7 @@
 import argparse
 import csv
 import math
+import os
 import re
 import subprocess
 import tempfile
@@ -12,7 +13,7 @@ from Parameter_Card_Generator import update_param, update_production_channels
 
 
 ROOT = Path(__file__).resolve().parent
-TEMPLATE = ROOT.parent / "Jack_Shadel" / "parameter_template_decay.dat"
+TEMPLATE = ROOT / "parameter_template_visible_signal.dat"
 MASS_PI0 = 0.1349766
 MASS_ETA = 0.547862
 DEFAULT_MASSES_MEV = tuple(range(100, 1001, 25))
@@ -120,8 +121,12 @@ def run_point(mass_dp_mev, epsilon_squared, output_dir, samplesize, max_trials):
 
     try:
         relative_card = card_path.relative_to(ROOT)
+        executable = os.environ.get(
+            "BDNMC_EXECUTABLE",
+            str(ROOT / "bin" / "BDNMC"),
+        )
         process = subprocess.run(
-            [str(ROOT / "bin" / "BDNMC"), str(relative_card)],
+            [executable, str(relative_card)],
             cwd=ROOT,
             check=True,
             capture_output=True,
