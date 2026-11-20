@@ -84,6 +84,24 @@ Multiple parameter cards may be run sequentially:
 ./bin/BDNMC run1.dat run2.dat run3.dat
 ```
 
+## Visible Signal Scan
+
+`visible_signal_scan.py` scans dark-photon mass against ε² and produces a CSV
+and heatmap under `Events/visible_signal_scan`. Run a small pilot with:
+
+```bash
+conda run -n test_env python visible_signal_scan.py \
+  --point 350 1e-14 \
+  --point 780 1e-15
+```
+
+With no `--point` options, it runs the default 100–1000 MeV mass grid in
+25 MeV steps and ε² values from 1e-12 to 1e-16 in half-decade steps. The
+current provisional assumption is `m_DM = 0.6 m_DP`, which closes the
+invisible dark-photon decay channel for this scan. Confirm that mass relation
+before interpreting a full scan as a reproduction of the presentation. The
+SHIP exclusion contours shown in the presentation are not included.
+
 ---
 
 ## Example Output
