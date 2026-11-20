@@ -108,12 +108,14 @@ def run_point(mass_dp_mev, epsilon_squared, output_dir, samplesize, max_trials):
         lines = update_param(template_file.readlines(), params)
     lines = update_production_channels(lines, production_channels(mass_dp_gev))
 
+    card_directory = ROOT / "Cards"
+    card_directory.mkdir(parents=True, exist_ok=True)
     with tempfile.NamedTemporaryFile(
         mode="w",
         encoding="utf-8",
         suffix=".dat",
         prefix=".visible_signal_scan_",
-        dir=ROOT / "Cards",
+        dir=card_directory,
         delete=False,
     ) as card_file:
         card_path = Path(card_file.name)

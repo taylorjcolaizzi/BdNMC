@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+build/main
+Cards/.visible_signal_scan_*.dat
+Cards/parameter_*.dat
+Events/batch/
+Events/summary.dat
+logs/
