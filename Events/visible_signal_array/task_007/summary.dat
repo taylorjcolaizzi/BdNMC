@@ -1,0 +1,5 @@
+Run 1795282739
+pi0_decay 0.1 0.06 5.62341e-07 0.5 2540.58 Signal_Decay 4e+21 1 1000 2.0656e+08 1.01967e+09
+eta_decay 0.1 0.06 5.62341e-07 0.5 4803.37 Signal_Decay 4e+21 1 1000 8.10573e+08 1.01967e+09
+Dark_Photon_Bremsstrahlung 0.1 0.06 5.62341e-07 0.5 61.7224 Signal_Decay 4e+21 1 1000 2.53708e+06 1.01967e+09
+Total 0.1 0.06 5.62341e-07 0.5 7405.67 Signal_Decay 4e+21 1 1000 
