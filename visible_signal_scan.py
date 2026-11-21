@@ -131,8 +131,9 @@ def run_point(mass_dp_mev, epsilon_squared, output_dir, samplesize, max_trials):
             [executable, str(relative_card)],
             cwd=ROOT,
             check=True,
-            capture_output=True,
-            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            universal_newlines=True,
         )
     except subprocess.CalledProcessError as error:
         raise RuntimeError(
@@ -140,7 +141,10 @@ def run_point(mass_dp_mev, epsilon_squared, output_dir, samplesize, max_trials):
             f"epsilon^2={epsilon_squared:g}:\n{error.stdout}{error.stderr}"
         ) from error
     finally:
-        card_path.unlink(missing_ok=True)
+        try:
+            card_path.unlink()
+        except FileNotFoundError:
+            pass
 
     events = parse_predicted_events(process.stdout)
     return {
